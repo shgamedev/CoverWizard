@@ -105,14 +105,6 @@ export const PRESETS: CoverPreset[] = [
     heightIn: 4.65,
     dpi: 300,
   },
-  // --- Misc ---
-  {
-    id: "dvd",
-    label: "Standard DVD Case Cover",
-    widthIn: 5.4,
-    heightIn: 7.55,
-    dpi: 300,
-  },
 ];
 
 export function getPixelDimensions(preset: CoverPreset): {
