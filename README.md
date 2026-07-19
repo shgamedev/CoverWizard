@@ -6,7 +6,7 @@ Web app designed to receive an image file of cover art for physical video games 
 
 # How to Use
 
-1. Navigate to `url`
+1. Navigate to [Cover Wizard](https://shgamedev.github.io/CoverWizard/)
 1. Drag or upload your image file to the input element on the webpage
 1. Your image will be processed and will download in your browser automatically
 1. Print your image
