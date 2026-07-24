@@ -1,15 +1,30 @@
 /* CoverWizard app styles (plain CSS) */
 .app {
   max-width: 720px;
+  height: 100dvh;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 1rem 1rem 0.5rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.app__header {
+  flex-shrink: 0;
+}
+
+.app__header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
 }
 
 .app__header p {
   color: #666;
   max-width: 1024px;
-  margin: 0.5rem auto 1.5rem;
+  margin: 0.25rem auto 0.5rem;
+  font-size: 0.9rem;
 }
 
 .app__region-notice {
@@ -18,30 +33,35 @@
   background-color: rgba(255, 200, 0, 0.1);
   border: 1px solid rgba(255, 200, 0, 0.35);
   border-radius: 6px;
-  padding: 0.3rem 0.75rem;
-  font-size: 0.875rem;
-  margin-bottom: 1rem;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
 }
 
 .app__main {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 0.75rem;
   align-items: center;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .preset-selector {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .dropzone {
   width: 100%;
   border: 2px dashed #888;
   border-radius: 8px;
-  padding: 2.5rem 1rem;
+  padding: 1.5rem 1rem;
   cursor: pointer;
+  flex-shrink: 0;
   transition:
     border-color 0.2s ease,
     background-color 0.2s ease;
@@ -53,14 +73,17 @@
 }
 
 .preview-canvas-wrapper {
-  max-width: 100%;
+  flex: 1;
+  min-height: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .preview-canvas {
   display: block;
-  max-height: 50vh;
+  max-height: 100%;
+  max-width: 100%;
   width: auto;
   height: auto;
   border: 1px solid #ccc;
@@ -68,38 +91,42 @@
 }
 
 .download-button {
-  padding: 0.6rem 1.4rem;
+  padding: 0.5rem 1.2rem;
   font-size: 1rem;
   cursor: pointer;
 }
 
 .app__error {
   color: #d33;
+  flex-shrink: 0;
 }
 
 .app__buttons {
   display: flex;
   gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .app__print-notice {
   max-width: 480px;
   color: #888;
-  font-size: 0.825rem;
-  line-height: 1.5;
+  font-size: 0.775rem;
+  line-height: 1.4;
   border-top: 1px solid #333;
-  padding-top: 0.75rem;
+  padding-top: 0.5rem;
   margin: 0;
+  flex-shrink: 0;
 }
 
 .app__footer {
-  margin-top: 2rem;
-  font-size: 0.85rem;
-  color: #888;
+  flex-shrink: 0;
+  padding: 0.4rem 0;
+  font-size: 0.8rem;
+  color: #555;
 }
 
 @media (max-width: 768px) {
   .app {
-    padding: 1.5rem 0.75rem;
+    padding: 0.75rem 0.75rem 0.25rem;
   }
 }
