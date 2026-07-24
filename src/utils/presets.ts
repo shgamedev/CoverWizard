@@ -16,8 +16,8 @@ export const PRESETS: CoverPreset[] = [
   {
     id: "ps1-front",
     label: "PS1 Case Cover - Front (Jewel Case)",
-    widthMm: 123,
-    heightMm: 125,
+    widthMm: 122,
+    heightMm: 123,
     dpi: 300,
   },
   {

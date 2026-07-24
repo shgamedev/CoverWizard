@@ -40,7 +40,7 @@ All presets are **PAL region** only. For best results your source image should *
 
 | Preset                          | Width (px) | Height (px) | Physical Size    |
 | ------------------------------- | ---------- | ----------- | ---------------- |
-| PS1 Front (Jewel Case)          | **1453**   | **1476**    | 123 × 125 mm     |
+| PS1 Front (Jewel Case)          | **1441**   | **1453**    | 122 × 123 mm     |
 | PS1 Back/Tray Card (Jewel Case) | **1937**   | **1441**    | 164 × 122 mm     |
 | PS2                             | **1604**   | **2250**    | 135.9 × 190.5 mm |
 | PS3 (Blu-ray)                   | **1547**   | **2065**    | 131 × 174.8 mm   |
