@@ -1,6 +1,13 @@
 import type { CoverPreset } from "./presets";
 import { getPixelDimensions } from "./presets";
 
+// A4 page at 300 DPI — the output canvas is always this size so that printing
+// on A4 with any default "full page" setting places the cover at exactly the
+// correct physical dimensions without needing to touch print scaling options.
+const PAGE_DPI = 300;
+const PAGE_W_PX = Math.round((210 / 25.4) * PAGE_DPI); // 2480 px
+const PAGE_H_PX = Math.round((297 / 25.4) * PAGE_DPI); // 3508 px
+
 /**
  * Loads a File into an HTMLImageElement.
  */
@@ -21,25 +28,36 @@ export function loadImage(file: File): Promise<HTMLImageElement> {
 }
 
 /**
- * Resizes/crops an image (cover-fit: fills target dimensions, cropping
- * overflow) onto a canvas sized to the given preset's print dimensions.
+ * Renders the cover art onto a full A4 page canvas (300 DPI = 2480×3508 px)
+ * with the cover centered. Printing the output on A4 at any "full page /
+ * fit to page" setting will produce the exact physical cover dimensions
+ * because the page itself is the scale reference.
  */
 export function renderCoverToCanvas(
   img: HTMLImageElement,
   preset: CoverPreset,
   canvas: HTMLCanvasElement,
 ): void {
-  const { width: targetW, height: targetH } = getPixelDimensions(preset);
+  // Cover dimensions in pixels at 300 DPI
+  const { width: coverW, height: coverH } = getPixelDimensions(preset);
 
-  canvas.width = targetW;
-  canvas.height = targetH;
+  // Always output an A4 page
+  canvas.width = PAGE_W_PX;
+  canvas.height = PAGE_H_PX;
 
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Could not get canvas 2D context");
 
-  ctx.clearRect(0, 0, targetW, targetH);
+  // White page background
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, PAGE_W_PX, PAGE_H_PX);
 
-  const targetRatio = targetW / targetH;
+  // Center the cover on the page
+  const offsetX = Math.round((PAGE_W_PX - coverW) / 2);
+  const offsetY = Math.round((PAGE_H_PX - coverH) / 2);
+
+  // Crop source image to cover aspect ratio (cover-fit)
+  const coverRatio = coverW / coverH;
   const srcRatio = img.width / img.height;
 
   let sx = 0;
@@ -47,17 +65,15 @@ export function renderCoverToCanvas(
   let sWidth = img.width;
   let sHeight = img.height;
 
-  if (srcRatio > targetRatio) {
-    // Source is wider than target: crop left/right
-    sWidth = img.height * targetRatio;
+  if (srcRatio > coverRatio) {
+    sWidth = img.height * coverRatio;
     sx = (img.width - sWidth) / 2;
   } else {
-    // Source is taller than target: crop top/bottom
-    sHeight = img.width / targetRatio;
+    sHeight = img.width / coverRatio;
     sy = (img.height - sHeight) / 2;
   }
 
-  ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, targetW, targetH);
+  ctx.drawImage(img, sx, sy, sWidth, sHeight, offsetX, offsetY, coverW, coverH);
 }
 
 /**
@@ -132,12 +148,10 @@ function makeCrcTable(): Uint32Array {
 
 /**
  * Exports the canvas as a PNG Blob with DPI metadata embedded in the pHYs
- * chunk so that printing at 100% scale produces the exact physical dimensions.
+ * chunk. The page is always A4 at PAGE_DPI so printing on A4 at full-page
+ * scale produces the exact physical cover dimensions.
  */
-export function canvasToBlob(
-  canvas: HTMLCanvasElement,
-  dpi: number,
-): Promise<Blob> {
+export function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
   return new Promise((resolve, reject) => {
     canvas.toBlob(
       (blob) => {
@@ -147,7 +161,7 @@ export function canvasToBlob(
         }
         blob
           .arrayBuffer()
-          .then((buf) => resolve(injectPngDpi(buf, dpi)))
+          .then((buf) => resolve(injectPngDpi(buf, PAGE_DPI)))
           .catch(reject);
       },
       "image/png",
