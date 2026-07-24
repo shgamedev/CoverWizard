@@ -8,8 +8,19 @@
 
 .app__header p {
   color: #666;
-  max-width: 560px;
+  max-width: 1024px;
   margin: 0.5rem auto 1.5rem;
+}
+
+.app__region-notice {
+  display: inline-block;
+  color: #b8860b;
+  background-color: rgba(255, 200, 0, 0.1);
+  border: 1px solid rgba(255, 200, 0, 0.35);
+  border-radius: 6px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
 }
 
 .app__main {
@@ -43,11 +54,14 @@
 
 .preview-canvas-wrapper {
   max-width: 100%;
-  overflow: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .preview-canvas {
-  max-width: 100%;
+  display: block;
+  max-height: 50vh;
+  width: auto;
   height: auto;
   border: 1px solid #ccc;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -61,6 +75,21 @@
 
 .app__error {
   color: #d33;
+}
+
+.app__buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.app__print-notice {
+  max-width: 480px;
+  color: #888;
+  font-size: 0.825rem;
+  line-height: 1.5;
+  border-top: 1px solid #333;
+  padding-top: 0.75rem;
+  margin: 0;
 }
 
 .app__footer {

@@ -25,8 +25,8 @@ For best results, your source image should **at least match** the dimensions bel
 
 | Preset                          | Width (px) | Height (px) | Physical Size    |
 | ------------------------------- | ---------- | ----------- | ---------------- |
-| PS1 Front (Jewel Case)          | **1417**   | **2014**    | 120 × 170.5 mm   |
-| PS1 Back/Tray Card (Jewel Case) | **1761**   | **1394**    | 149 × 118 mm     |
+| PS1 Front (Jewel Case)          | **1453**   | **1476**    | 123 × 125 mm     |
+| PS1 Back/Tray Card (Jewel Case) | **1937**   | **1441**    | 164 × 122 mm     |
 | PS2                             | **1604**   | **2250**    | 135.9 × 190.5 mm |
 | PS3 (Blu-ray)                   | **1547**   | **2065**    | 131 × 174.8 mm   |
 | PS4                             | **1620**   | **2010**    | 137.2 × 170.2 mm |

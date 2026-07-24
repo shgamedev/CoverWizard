@@ -1,118 +1,128 @@
 // Cover art print presets.
-// Dimensions are the physical print size (inches) for the front cover insert
+// All presets are for PAL region physical cases.
+// Dimensions are the physical print size (mm) for the front cover insert
 // of common physical game cases, converted to pixels at the given DPI.
 
 export interface CoverPreset {
   id: string;
   label: string;
-  widthIn: number;
-  heightIn: number;
+  widthMm: number;
+  heightMm: number;
   dpi: number;
 }
 
 export const PRESETS: CoverPreset[] = [
   // --- PlayStation ---
   {
-    id: "ps1",
-    label: "PS1 Case Cover (Jewel Case)",
-    widthIn: 4.7244,
-    heightIn: 6.7126,
+    id: "ps1-front",
+    label: "PS1 Case Cover - Front (Jewel Case)",
+    widthMm: 123,
+    heightMm: 125,
+    dpi: 300,
+  },
+  {
+    id: "ps1-back",
+    label: "PS1 Case Cover - Back/Tray Card (Jewel Case)",
+    widthMm: 164,
+    heightMm: 122,
     dpi: 300,
   },
   {
     id: "ps2",
     label: "PS2 Case Cover",
-    widthIn: 5.35,
-    heightIn: 7.5,
+    widthMm: 135.9,
+    heightMm: 190.5,
     dpi: 300,
   },
   {
     id: "ps3",
     label: "PS3 Case Cover (Blu-ray)",
-    widthIn: 5.157,
-    heightIn: 6.883,
+    widthMm: 131,
+    heightMm: 174.8,
     dpi: 300,
   },
   {
     id: "ps4",
     label: "PS4 Case Cover",
-    widthIn: 5.4,
-    heightIn: 6.7,
+    widthMm: 137.2,
+    heightMm: 170.2,
     dpi: 300,
   },
   {
     id: "ps5",
     label: "PS5 Case Cover",
-    widthIn: 5.4,
-    heightIn: 6.7,
+    widthMm: 137.2,
+    heightMm: 170.2,
     dpi: 300,
   },
   // --- Xbox ---
   {
     id: "xbox",
     label: "Original Xbox Case Cover",
-    widthIn: 5.35,
-    heightIn: 7.5,
+    widthMm: 135.9,
+    heightMm: 190.5,
     dpi: 300,
   },
   {
     id: "xbox-360",
     label: "Xbox 360 Case Cover",
-    widthIn: 5.35,
-    heightIn: 7.5,
+    widthMm: 135.9,
+    heightMm: 190.5,
     dpi: 300,
   },
   {
     id: "xbox-one",
     label: "Xbox One Case Cover",
-    widthIn: 5.4,
-    heightIn: 6.75,
+    widthMm: 137.2,
+    heightMm: 171.5,
     dpi: 300,
   },
   {
     id: "xbox-series",
     label: "Xbox Series X|S Case Cover",
-    widthIn: 5.4,
-    heightIn: 6.75,
+    widthMm: 137.2,
+    heightMm: 171.5,
     dpi: 300,
   },
   // --- Nintendo (cased consoles) ---
   {
     id: "gamecube",
     label: "GameCube Case Cover",
-    widthIn: 4.17,
-    heightIn: 5.83,
+    widthMm: 105.9,
+    heightMm: 148.1,
     dpi: 300,
   },
   {
     id: "wii",
     label: "Wii Case Cover",
-    widthIn: 5.35,
-    heightIn: 7.5,
+    widthMm: 135.9,
+    heightMm: 190.5,
     dpi: 300,
   },
   {
     id: "wiiu",
     label: "Wii U Case Cover",
-    widthIn: 5.35,
-    heightIn: 7.5,
+    widthMm: 135.9,
+    heightMm: 190.5,
     dpi: 300,
   },
   {
     id: "switch",
     label: "Nintendo Switch Case Cover",
-    widthIn: 4.25,
-    heightIn: 4.65,
+    widthMm: 108,
+    heightMm: 118.1,
     dpi: 300,
   },
 ];
+
+const MM_PER_INCH = 25.4;
 
 export function getPixelDimensions(preset: CoverPreset): {
   width: number;
   height: number;
 } {
   return {
-    width: Math.round(preset.widthIn * preset.dpi),
-    height: Math.round(preset.heightIn * preset.dpi),
+    width: Math.round((preset.widthMm / MM_PER_INCH) * preset.dpi),
+    height: Math.round((preset.heightMm / MM_PER_INCH) * preset.dpi),
   };
 }

@@ -11,6 +11,7 @@ import {
   renderCoverToCanvas,
 } from "./utils/imageProcessing";
 import "./App.css";
+import ClearImageButton from "./components/ClearImageButton";
 
 function App() {
   const [presetId, setPresetId] = useState(PRESETS[0].id);
@@ -41,7 +42,7 @@ function App() {
   const handleDownload = async () => {
     if (!canvasRef.current) return;
     try {
-      const blob = await canvasToBlob(canvasRef.current);
+      const blob = await canvasToBlob(canvasRef.current, preset.dpi);
       saveAs(blob, `${fileName}-${preset.id}.png`);
     } catch {
       setError("Failed to generate download. Please try again.");
@@ -53,21 +54,35 @@ function App() {
       <header className="app__header">
         <h1>Cover Wizard</h1>
         <p>
-          Upload your video game cover art, choose a case type, and download a
+          Upload your video game cover art, choose a cover type, and download a
           print-ready image sized exactly for a replacement slip cover.
+        </p>
+        <p className="app__region-notice">
+          ⚠️ All presets are sized for <strong>PAL region</strong> cases.
         </p>
       </header>
 
       <main className="app__main">
         <PresetSelector value={presetId} onChange={setPresetId} />
-        <Dropzone onFileAccepted={handleFileAccepted} />
+        {!image && <Dropzone onFileAccepted={handleFileAccepted} />}
 
         {error && <p className="app__error">{error}</p>}
 
         {image && (
           <>
-            <PreviewCanvas ref={canvasRef} />
-            <DownloadButton onDownload={handleDownload} />
+            <PreviewCanvas
+              ref={canvasRef}
+              aspectRatio={preset.widthMm / preset.heightMm}
+            />
+            <div className="app__buttons">
+              <ClearImageButton onClear={() => setImage(null)} />
+              <DownloadButton onDownload={handleDownload} />
+            </div>
+            <p className="app__print-notice">
+              🖨️ When printing, set <strong>Photo size</strong> (or scaling) to{" "}
+              <strong>Actual size / 100%</strong> — never "Full page" or "Fit to
+              page", or the dimensions will be wrong.
+            </p>
           </>
         )}
       </main>

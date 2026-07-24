@@ -19,7 +19,7 @@ export default function PresetSelector({
       >
         {PRESETS.map((preset) => (
           <option key={preset.id} value={preset.id}>
-            {preset.label} ({preset.widthIn}&quot; x {preset.heightIn}&quot;)
+            {preset.label} ({preset.widthMm} x {preset.heightMm} mm)
           </option>
         ))}
       </select>
