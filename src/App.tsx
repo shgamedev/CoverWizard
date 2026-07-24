@@ -42,7 +42,7 @@ function App() {
   const handleDownload = async () => {
     if (!canvasRef.current) return;
     try {
-      const blob = await canvasToBlob(canvasRef.current, preset.dpi);
+      const blob = await canvasToBlob(canvasRef.current);
       saveAs(blob, `${fileName}-${preset.id}.png`);
     } catch {
       setError("Failed to generate download. Please try again.");
@@ -70,18 +70,15 @@ function App() {
 
         {image && (
           <>
-            <PreviewCanvas
-              ref={canvasRef}
-              aspectRatio={preset.widthMm / preset.heightMm}
-            />
+            <PreviewCanvas ref={canvasRef} aspectRatio={210 / 297} />
             <div className="app__buttons">
               <ClearImageButton onClear={() => setImage(null)} />
               <DownloadButton onDownload={handleDownload} />
             </div>
             <p className="app__print-notice">
-              🖨️ When printing, set <strong>Photo size</strong> (or scaling) to{" "}
-              <strong>Actual size / 100%</strong> — never "Full page" or "Fit to
-              page", or the dimensions will be wrong.
+              🖨️ The downloaded file is sized for <strong>A4</strong> — print it
+              at <strong>full page / fit to page</strong> on A4 paper and the
+              cover will be at exactly the correct dimensions.
             </p>
           </>
         )}
