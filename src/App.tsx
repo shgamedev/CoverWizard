@@ -13,6 +13,8 @@ import {
 import "./App.css";
 import ClearImageButton from "./components/ClearImageButton";
 
+const APP_VERSION = import.meta.env.VITE_APP_VERSION ?? "0.1.0";
+
 function App() {
   const [presetId, setPresetId] = useState(PRESETS[0].id);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
@@ -87,6 +89,7 @@ function App() {
 
       <footer className="app__footer">
         <p>All processing happens locally in your browser.</p>
+        <p>v{APP_VERSION}</p>
       </footer>
     </div>
   );
