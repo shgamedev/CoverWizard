@@ -22,9 +22,12 @@ All output files are rendered onto a full **A4 page at 300 DPI**. Simply print t
 The downloaded PNG is an **A4 page (210 × 297 mm) at 300 DPI** with the cover art centered. This means:
 
 - ✅ Print on **A4 paper**
+- ✅ Set orientation to **Portrait**
 - ✅ Set scaling to **Full page** or **Fit to page**
 - ✅ No need to change any other print settings
 - ❌ Do **not** use "Actual size / 100%", as that would rely on the app's embedded DPI metadata instead of the page layout
+
+> **Always print Portrait.** Every preset — including landscape-shaped covers like the PS1 tray card — is centered on a portrait A4 page. The page never needs to be rotated.
 
 # Example Resources
 

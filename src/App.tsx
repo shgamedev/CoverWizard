@@ -76,9 +76,10 @@ function App() {
               <DownloadButton onDownload={handleDownload} />
             </div>
             <p className="app__print-notice">
-              🖨️ The downloaded file is sized for <strong>A4</strong> — print it
-              at <strong>full page / fit to page</strong> on A4 paper and the
-              cover will be at exactly the correct dimensions.
+              🖨️ The downloaded file is sized for <strong>A4</strong> — print it{" "}
+              <strong>Portrait</strong> at{" "}
+              <strong>full page / fit to page</strong> on A4 paper and the cover
+              will be at exactly the correct dimensions.
             </p>
           </>
         )}
