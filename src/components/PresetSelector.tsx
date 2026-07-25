@@ -11,7 +11,7 @@ export default function PresetSelector({
 }: PresetSelectorProps) {
   return (
     <div className="preset-selector">
-      <label htmlFor="preset-select">Cover Type:</label>
+      <label htmlFor="preset-select">Cover Type (PAL):</label>
       <select
         id="preset-select"
         value={value}
@@ -19,7 +19,7 @@ export default function PresetSelector({
       >
         {PRESETS.map((preset) => (
           <option key={preset.id} value={preset.id}>
-            {preset.label} ({preset.widthMm} x {preset.heightMm} mm)
+            {preset.label}
           </option>
         ))}
       </select>

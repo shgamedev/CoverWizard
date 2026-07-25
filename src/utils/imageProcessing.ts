@@ -1,12 +1,19 @@
-import type { CoverPreset } from "./presets";
-import { getPixelDimensions } from "./presets";
+import type { CoverSlot } from "./presets";
+import { getSlotPixelDimensions } from "./presets";
 
 // A4 page at 300 DPI — the output canvas is always this size so that printing
 // on A4 with any default "full page" setting places the cover at exactly the
 // correct physical dimensions without needing to touch print scaling options.
 const PAGE_DPI = 300;
-const PAGE_W_PX = Math.round((210 / 25.4) * PAGE_DPI); // 2480 px
-const PAGE_H_PX = Math.round((297 / 25.4) * PAGE_DPI); // 3508 px
+// Portrait: 210 × 297 mm  |  Landscape: 297 × 210 mm
+const A4_SHORT_PX = Math.round((210 / 25.4) * PAGE_DPI); // 2480 px
+const A4_LONG_PX = Math.round((297 / 25.4) * PAGE_DPI); // 3508 px
+const GAP_MM = 8; // gap between slots when stacking on page
+
+export interface SlotImage {
+  slot: CoverSlot;
+  image: HTMLImageElement;
+}
 
 /**
  * Loads a File into an HTMLImageElement.
@@ -28,52 +35,122 @@ export function loadImage(file: File): Promise<HTMLImageElement> {
 }
 
 /**
- * Renders the cover art onto a full A4 page canvas (300 DPI = 2480×3508 px)
- * with the cover centered. Printing the output on A4 at any "full page /
- * fit to page" setting will produce the exact physical cover dimensions
- * because the page itself is the scale reference.
+ * Draws a source image scaled to fit (contain-fit) within the destination
+ * rectangle, preserving aspect ratio with no cropping. The image is centered;
+ * any unused space remains the background colour (white).
+ */
+function drawContainedImage(
+  ctx: CanvasRenderingContext2D,
+  image: HTMLImageElement,
+  dx: number,
+  dy: number,
+  dw: number,
+  dh: number,
+): void {
+  const srcRatio = image.width / image.height;
+  const dstRatio = dw / dh;
+  let drawW: number, drawH: number;
+  if (srcRatio > dstRatio) {
+    // Image is wider than destination — constrain by width
+    drawW = dw;
+    drawH = dw / srcRatio;
+  } else {
+    // Image is taller than destination — constrain by height
+    drawH = dh;
+    drawW = dh * srcRatio;
+  }
+  const offsetX = dx + Math.round((dw - drawW) / 2);
+  const offsetY = dy + Math.round((dh - drawH) / 2);
+  ctx.drawImage(
+    image,
+    0,
+    0,
+    image.width,
+    image.height,
+    offsetX,
+    offsetY,
+    drawW,
+    drawH,
+  );
+}
+
+/**
+ * Renders one or more slot images onto a full A4 page canvas at 300 DPI.
+ * Portrait: 2480×3508 px (210×297 mm). Landscape: 3508×2480 px (297×210 mm).
+ * Multiple slots are stacked and centered as a group.
+ * Printing on A4 at "full page / fit to page" produces the exact physical dimensions.
  */
 export function renderCoverToCanvas(
-  img: HTMLImageElement,
-  preset: CoverPreset,
+  slotImages: SlotImage[],
+  dpi: number,
+  orientation: "portrait" | "landscape",
   canvas: HTMLCanvasElement,
 ): void {
-  // Cover dimensions in pixels at 300 DPI
-  const { width: coverW, height: coverH } = getPixelDimensions(preset);
+  const pageW = orientation === "landscape" ? A4_LONG_PX : A4_SHORT_PX;
+  const pageH = orientation === "landscape" ? A4_SHORT_PX : A4_LONG_PX;
 
-  // Always output an A4 page
-  canvas.width = PAGE_W_PX;
-  canvas.height = PAGE_H_PX;
+  canvas.width = pageW;
+  canvas.height = pageH;
 
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Could not get canvas 2D context");
 
-  // White page background
   ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, PAGE_W_PX, PAGE_H_PX);
+  ctx.fillRect(0, 0, pageW, pageH);
 
-  // Center the cover on the page
-  const offsetX = Math.round((PAGE_W_PX - coverW) / 2);
-  const offsetY = Math.round((PAGE_H_PX - coverH) / 2);
+  if (slotImages.length === 0) return;
 
-  // Crop source image to cover aspect ratio (cover-fit)
-  const coverRatio = coverW / coverH;
-  const srcRatio = img.width / img.height;
+  const gapPx = Math.round((GAP_MM / 25.4) * dpi);
+  const dims = slotImages.map(({ slot }) => getSlotPixelDimensions(slot, dpi));
+  const totalH =
+    dims.reduce((sum, d) => sum + d.height, 0) +
+    gapPx * (slotImages.length - 1);
 
-  let sx = 0;
-  let sy = 0;
-  let sWidth = img.width;
-  let sHeight = img.height;
+  let y = Math.round((pageH - totalH) / 2);
 
-  if (srcRatio > coverRatio) {
-    sWidth = img.height * coverRatio;
-    sx = (img.width - sWidth) / 2;
-  } else {
-    sHeight = img.width / coverRatio;
-    sy = (img.height - sHeight) / 2;
+  for (let i = 0; i < slotImages.length; i++) {
+    const { width: coverW, height: coverH } = dims[i];
+    const x = Math.round((pageW - coverW) / 2);
+    drawContainedImage(ctx, slotImages[i].image, x, y, coverW, coverH);
+    y += coverH + gapPx;
   }
+}
 
-  ctx.drawImage(img, sx, sy, sWidth, sHeight, offsetX, offsetY, coverW, coverH);
+/**
+ * Renders slot images onto a preview canvas sized to the cover content area
+ * only — no page border white space. Used for the on-screen preview so the
+ * user sees the cover art prominently rather than a small image on a large page.
+ */
+export function renderPreviewToCanvas(
+  slotImages: SlotImage[],
+  dpi: number,
+  canvas: HTMLCanvasElement,
+): void {
+  if (slotImages.length === 0) return;
+
+  const gapPx = Math.round((GAP_MM / 25.4) * dpi);
+  const dims = slotImages.map(({ slot }) => getSlotPixelDimensions(slot, dpi));
+  const maxW = Math.max(...dims.map((d) => d.width));
+  const totalH =
+    dims.reduce((sum, d) => sum + d.height, 0) +
+    gapPx * (slotImages.length - 1);
+
+  canvas.width = maxW;
+  canvas.height = totalH;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Could not get canvas 2D context");
+
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, maxW, totalH);
+
+  let y = 0;
+  for (let i = 0; i < slotImages.length; i++) {
+    const { width: coverW, height: coverH } = dims[i];
+    const x = Math.round((maxW - coverW) / 2);
+    drawContainedImage(ctx, slotImages[i].image, x, y, coverW, coverH);
+    y += coverH + gapPx;
+  }
 }
 
 /**
