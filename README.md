@@ -11,7 +11,7 @@ All output files are rendered onto a full **A4 page at 300 DPI**. Simply print t
 # How to Use
 
 1. Navigate to [Cover Wizard](https://shgamedev.github.io/CoverWizard/)
-1. Select your cover type from the **Cover Type (PAL)** dropdown
+1. Select your cover type from the **Cover Type** dropdown
 1. Drag or upload your cover art image
 1. A preview will appear — download the file when ready
 1. Print on **A4 paper** at **full page / fit to page** — the cover will be at exactly the right size
