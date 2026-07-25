@@ -31,9 +31,17 @@ const SPINE_MM = {
 // Empirical calibration from physical print tests:
 // PS2 full-wrap was ~15 mm too wide and ~9 mm too tall at previous values.
 const CALIBRATED_MM = {
+  ps1Front: {
+    width: 121,
+    height: 125,
+  },
+  ps1Back: {
+    width: 161,
+    height: 121.8,
+  },
   ps2LikeWrap: {
-    width: 270.8,
-    height: 181.5,
+    width: 267.8,
+    height: 185.5,
   },
 } as const;
 
@@ -46,8 +54,18 @@ export const PRESETS: CoverPreset[] = [
     pageOrientation: "portrait",
     uploadType: "multi-part",
     slots: [
-      { id: "front", label: "Front Insert", widthMm: 122, heightMm: 123 },
-      { id: "back", label: "Back / Tray Card", widthMm: 164, heightMm: 122 },
+      {
+        id: "front",
+        label: "Front Insert",
+        widthMm: CALIBRATED_MM.ps1Front.width,
+        heightMm: CALIBRATED_MM.ps1Front.height,
+      },
+      {
+        id: "back",
+        label: "Back / Tray Card",
+        widthMm: CALIBRATED_MM.ps1Back.width,
+        heightMm: CALIBRATED_MM.ps1Back.height,
+      },
     ],
   },
   {
@@ -121,8 +139,8 @@ export const PRESETS: CoverPreset[] = [
       {
         id: "cover",
         label: "Full Wrap",
-        widthMm: wrapWidthMm(135.9, SPINE_MM.dvd),
-        heightMm: 190.5,
+        widthMm: CALIBRATED_MM.ps2LikeWrap.width,
+        heightMm: CALIBRATED_MM.ps2LikeWrap.height,
       },
     ],
   },
@@ -136,8 +154,8 @@ export const PRESETS: CoverPreset[] = [
       {
         id: "cover",
         label: "Full Wrap",
-        widthMm: wrapWidthMm(135.9, SPINE_MM.dvd),
-        heightMm: 190.5,
+        widthMm: CALIBRATED_MM.ps2LikeWrap.width,
+        heightMm: CALIBRATED_MM.ps2LikeWrap.height,
       },
     ],
   },
@@ -198,8 +216,8 @@ export const PRESETS: CoverPreset[] = [
       {
         id: "cover",
         label: "Full Wrap",
-        widthMm: wrapWidthMm(135.9, SPINE_MM.dvd),
-        heightMm: 190.5,
+        widthMm: CALIBRATED_MM.ps2LikeWrap.width,
+        heightMm: CALIBRATED_MM.ps2LikeWrap.height,
       },
     ],
   },
@@ -213,8 +231,8 @@ export const PRESETS: CoverPreset[] = [
       {
         id: "cover",
         label: "Full Wrap",
-        widthMm: wrapWidthMm(135.9, SPINE_MM.dvd),
-        heightMm: 190.5,
+        widthMm: CALIBRATED_MM.ps2LikeWrap.width,
+        heightMm: CALIBRATED_MM.ps2LikeWrap.height,
       },
     ],
   },

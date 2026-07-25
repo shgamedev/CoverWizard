@@ -53,9 +53,9 @@ Input expectations:
 
 | Preset                          | Width (px) | Height (px) | Physical Size    |
 | ------------------------------- | ---------- | ----------- | ---------------- |
-| PS1 Front (Jewel Case)          | **1441**   | **1453**    | 122 × 123 mm     |
-| PS1 Back/Tray Card (Jewel Case) | **1937**   | **1441**    | 164 × 122 mm     |
-| PS2 Full Wrap                   | **3198**   | **2144**    | 270.8 × 181.5 mm |
+| PS1 Front (Jewel Case)          | **1429**   | **1476**    | 121 × 125 mm     |
+| PS1 Back/Tray Card (Jewel Case) | **1902**   | **1439**    | 161 × 121.8 mm   |
+| PS2 Full Wrap                   | **3163**   | **2191**    | 267.8 × 185.5 mm |
 | PS3 Full Wrap (Blu-ray)         | **3260**   | **2065**    | 276 × 174.8 mm   |
 | PS4 Full Wrap                   | **3406**   | **2010**    | 288.4 × 170.2 mm |
 | PS5 Full Wrap                   | **3406**   | **2010**    | 288.4 × 170.2 mm |
@@ -66,8 +66,8 @@ Input expectations:
 
 | Preset                     | Width (px) | Height (px) | Physical Size    |
 | -------------------------- | ---------- | ----------- | ---------------- |
-| Original Xbox Full Wrap    | **3376**   | **2250**    | 285.8 × 190.5 mm |
-| Xbox 360 Full Wrap         | **3376**   | **2250**    | 285.8 × 190.5 mm |
+| Original Xbox Full Wrap    | **3163**   | **2191**    | 267.8 × 185.5 mm |
+| Xbox 360 Full Wrap         | **3163**   | **2191**    | 267.8 × 185.5 mm |
 | Xbox One Full Wrap         | **3406**   | **2026**    | 288.4 × 171.5 mm |
 | Xbox Series X\|S Full Wrap | **3406**   | **2026**    | 288.4 × 171.5 mm |
 
@@ -75,14 +75,17 @@ Input expectations:
 
 | Preset                    | Width (px) | Height (px) | Physical Size    |
 | ------------------------- | ---------- | ----------- | ---------------- |
-| GameCube Full Wrap        | **3198**   | **2144**    | 270.8 × 181.5 mm |
-| Wii Full Wrap             | **3376**   | **2250**    | 285.8 × 190.5 mm |
-| Wii U Full Wrap           | **3376**   | **2250**    | 285.8 × 190.5 mm |
+| GameCube Full Wrap        | **3163**   | **2191**    | 267.8 × 185.5 mm |
+| Wii Full Wrap             | **3163**   | **2191**    | 267.8 × 185.5 mm |
+| Wii U Full Wrap           | **3163**   | **2191**    | 267.8 × 185.5 mm |
 | Nintendo Switch Full Wrap | **2669**   | **1395**    | 226 × 118.1 mm   |
 
 # Calibration Notes
 
-- **PS2 Full Wrap** and **GameCube Full Wrap** are intentionally locked to the same calibrated size: **270.8 × 181.5 mm** (**3198 × 2144 px** at 300 DPI).
+- **PS2 Full Wrap** and **GameCube Full Wrap** are intentionally locked to the same calibrated size: **267.8 × 185.5 mm** (**3163 × 2191 px** at 300 DPI).
+- **Original Xbox, Xbox 360, Wii, and Wii U** are also aligned to that same calibrated baseline.
+- **PS1 Front Insert** is calibrated to **121 × 125 mm** (**1429 × 1476 px** at 300 DPI).
+- **PS1 Back / Tray Card** is calibrated to **161 × 121.8 mm** (**1902 × 1439 px** at 300 DPI).
 - If prints are still slightly off, verify printer options first:
   - paper size = **A4**
   - orientation = matches selected preset
