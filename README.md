@@ -31,7 +31,7 @@ The downloaded PNG is an **A4 page (210 × 297 mm) at 300 DPI** with the cover a
 
 # Example Resources
 
-- [The Cover Project](https://www.thecoverproject.net/view.php?cover_id=19444) - resource for cover images
+- [The Cover Project](https://www.thecoverproject.net/) - resource for cover images
 
 # Required Input Image Dimensions
 
