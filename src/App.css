@@ -38,6 +38,19 @@
   margin-bottom: 0.5rem;
 }
 
+.app__dev-notice {
+  display: inline-block;
+  max-width: 560px;
+  color: #b23a3a;
+  background-color: rgba(255, 96, 96, 0.12);
+  border: 1px solid rgba(255, 96, 96, 0.35);
+  border-radius: 6px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
 .app__main {
   flex: 1;
   display: flex;

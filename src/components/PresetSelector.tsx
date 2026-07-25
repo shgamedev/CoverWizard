@@ -11,7 +11,7 @@ export default function PresetSelector({
 }: PresetSelectorProps) {
   return (
     <div className="preset-selector">
-      <label htmlFor="preset-select">Cover Type (PAL):</label>
+      <label htmlFor="preset-select">Cover Type:</label>
       <select
         id="preset-select"
         value={value}

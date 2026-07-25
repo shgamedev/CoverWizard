@@ -99,6 +99,10 @@ function App() {
     <div className="app">
       <header className="app__header">
         <h1>Cover Wizard</h1>
+        <p className="app__dev-notice">
+          This tool is still in development. Output sizing may not yet be
+          accurate, so please verify measurements before printing.
+        </p>
         <p>
           Upload your video game cover art, choose a cover type, and download a
           print-ready image sized exactly for a replacement slip cover.
